@@ -4,6 +4,7 @@
 参考地址[SlidingMenu自定义侧滑剩余的位置添加阴影淡入淡出](http://blog.csdn.net/niubitianping/article/details/52425003)
 
 - 废话少说，直接上图
+
 ![运行效果图](https://github.com/Madridliu/Fragment/blob/master/image/weatherprocess.gif)
 
 ![启动欢迎页](https://github.com/Madridliu/Fragment/blob/master/image/welcome.jpg)
