@@ -4,6 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -19,7 +20,7 @@ import android.widget.TextView;
 import com.example.fragment.Fragment1.CallBack;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
-public class MainActivity extends FragmentActivity implements OnClickListener{
+public class MainActivity extends FragmentActivity{
 
 	private static final int SHOW_RESPONSE = -1;
 	
@@ -55,7 +56,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener{
 	private TextView infoWeather4;
 	private TextView min4;
 	private TextView max4;
-	private String tempCity = "西安";
+	private String tempCity;
 	private Weather weather = new Weather();
 	
 	public SlidingMenu menu;
@@ -67,6 +68,9 @@ public class MainActivity extends FragmentActivity implements OnClickListener{
 			if (result.equals("null")) {
 				menu.toggle();
 			}else {
+				SharedPreferences.Editor editor = getSharedPreferences("data", MODE_PRIVATE).edit();
+				editor.putString("name", result);
+				editor.commit();
 				tempCity = result;
 				menu.toggle(); //关闭侧滑菜单，此方法是相反的，若菜单打开则关闭，关闭则打开
 				showWeather();
@@ -84,6 +88,13 @@ public class MainActivity extends FragmentActivity implements OnClickListener{
 		initSlidingMenu();
         FragmentManager manager  = getSupportFragmentManager();  
         manager.beginTransaction().replace(R.id.activity_main, f1).commit();
+        SharedPreferences pref = getSharedPreferences("data", MODE_PRIVATE);
+        String cityNametemp = pref.getString("name", "");
+        if (cityNametemp == "") {
+			tempCity = "北京";
+		} else {
+			tempCity = cityNametemp;
+		}
 		showWeather();
 		btnList.setOnClickListener(new OnClickListener() {
 			
@@ -357,17 +368,5 @@ public class MainActivity extends FragmentActivity implements OnClickListener{
 		min4 = (TextView) findViewById(R.id.tv_Min4);
 		max4 = (TextView) findViewById(R.id.tv_Max4);
 	}
-
-	@Override
-	public void onClick(View v) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-
-
-	
-
 }
 
